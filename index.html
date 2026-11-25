@@ -1,426 +1,678 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>My Sanctuary - Lifetime Journal</title>
-    
-    <!-- PWA & Mobile Web App Capabilities for iPhone Safari -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="My Sanctuary">
-    <link rel="apple-touch-icon" href="https://img.icons8.com/ios-filled/180/d8a47f/journal.png">
-    
-    <!-- Tailwind CSS & Google Fonts -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        sanctuary: {
-                            bg: '#fcfaf7',      /* Soft White / Cream */
-                            card: '#ffffff',    /* Pure White Card */
-                            cream: '#f4ede2',   /* Warm Beige / Cream */
-                            sage: '#8fa28f',    /* Sage Green */
-                            sageDark: '#5a6e5a',/* Dark Sage */
-                            blush: '#f2d6d0',   /* Blush Pink Accent */
-                            rose: '#d99b91',    /* Dusty Rose */
-                            text: '#4a4440',    /* Warm Neutral Text */
-                            muted: '#9c9288'    /* Muted Gray Brown */
-                        }
-                    },
-                    fontFamily: {
-                        serif: ['Cormorant Garamond', 'serif'],
-                        sans: ['Jost', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        body {
-            background-color: #fcfaf7;
-            color: #4a4440;
-            font-family: 'Jost', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .floral-border {
-            border: 1px solid rgba(217, 155, 145, 0.25);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f9e9ef">
+<title>My Little Journal ♡</title>
+<link rel="apple-touch-icon" href="./journal-icon.png">
+<style>
+:root{
+--pink:#f6dce7;--pinkdark:#bd7896;--green:#dcebdc;
+--purple:#e8def5;--orange:#f9e5ce;--cream:#fffaf7;
+--ink:#514750;--muted:#998b96;--shadow:0 8px 25px #8d6c7912
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding-bottom:90px}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+header{padding:24px 20px 15px;display:flex;justify-content:space-between;align-items:center;max-width:850px;margin:auto}
+.brand{font-family:Georgia,serif;font-size:25px;color:#9b6681}
+.brand small{display:block;font:11px sans-serif;color:var(--muted);letter-spacing:2px;margin-top:4px}
+.header-icon{background:var(--pink);border:0;border-radius:50%;width:43px;height:43px;font-size:20px}
+main{max-width:850px;margin:auto;padding:8px 17px}
+.page{display:none}.page.active{display:block}
+h1{font:30px Georgia,serif;margin-bottom:8px}
+h2{font:24px Georgia,serif}h3{font-size:15px}
+.subtitle{color:var(--muted);font-size:13px;line-height:1.6}
+.card{background:white;border-radius:22px;padding:20px;margin:15px 0;box-shadow:var(--shadow)}
+.hero{background:linear-gradient(135deg,#f7e1e9,#f0e9f7);padding:24px}
+.eyebrow{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#98738a;font-weight:700}
+.verse{font:21px/1.5 Georgia,serif;margin:14px 0}
+.reference{font-size:12px;color:#99768c}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.stat{padding:15px;border-radius:17px;background:white}
+.stat strong{display:block;font:25px Georgia,serif;margin-bottom:5px}
+.stat span{font-size:11px;color:var(--muted)}
+.pink{background:#fae9ef}.green{background:#eaf2e8}
+.purple{background:#f0eafa}.orange{background:#fff0df}
+.section-title{margin:24px 2px 10px;font:21px Georgia,serif}
+.btn{border:0;border-radius:14px;padding:12px 16px;background:var(--pink);color:#80566e;font-weight:650;font-size:13px}
+.btn.green-btn{background:var(--green);color:#52765b}
+.btn.purple-btn{background:var(--purple);color:#75618c}
+.btn.orange-btn{background:var(--orange);color:#986b3d}
+.btn.dark{background:#87677d;color:white}
+.btn.small{padding:8px 11px;font-size:11px}
+.btn.full{width:100%}
+input,textarea,select{width:100%;padding:13px;border:1px solid #eee3e9;border-radius:13px;background:#fffdfd;color:var(--ink);outline:none;margin:7px 0 13px}
+textarea{min-height:110px;resize:vertical;line-height:1.6}
+label{font-size:12px;font-weight:650;color:#806b79}
+.tabs{position:fixed;bottom:0;left:0;right:0;background:white;display:flex;justify-content:space-around;padding:10px 4px 18px;box-shadow:0 -5px 20px #8d6c7910;z-index:10;overflow-x:auto}
+.tab{border:0;background:transparent;color:#a99aa4;font-size:10px;min-width:57px;flex:1}
+.tab span{display:block;font-size:20px;margin-bottom:4px}
+.tab.active{color:#b36f91;font-weight:750}
+.devotional-text{font:15px/1.8 Georgia,serif;color:#665665}
+.prayer{background:#f4eff9;padding:16px;border-radius:16px;font:14px/1.7 Georgia,serif}
+.entry-item{padding:15px;border-radius:16px;background:white;margin:10px 0;border:1px solid #f3eaf0}
+.entry-item h3{margin-bottom:5px}
+.entry-date{font-size:11px;color:var(--muted)}
+.entry-preview{font-size:13px;line-height:1.5;color:#7c6d78;margin:8px 0}
+.actions{display:flex;gap:7px;flex-wrap:wrap}
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;text-align:center}
+.day-name{font-size:10px;color:var(--muted);padding:8px 0}
+.day{border:0;background:white;border-radius:10px;min-height:39px;color:var(--ink);font-size:12px}
+.day.has-entry{background:#e4f0e2;color:#50775a;font-weight:bold}
+.day.today{outline:2px solid #d79ab4}
+.day.empty{background:transparent}
+.mood-options{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 15px}
+.mood{border:1px solid #eee2e9;background:white;border-radius:13px;padding:9px 12px;font-size:20px}
+.mood.selected{background:var(--pink);border-color:#d59bb5}
+.empty-state{text-align:center;padding:30px 15px;color:var(--muted);font-size:13px}
+.divider{height:1px;background:#f1e8ed;margin:17px 0}
+.affirmation-card{background:linear-gradient(140deg,#f8e4ed,#eee6f8);border-radius:22px;padding:25px;text-align:center}
+.affirmation-text{font:italic 23px/1.5 Georgia,serif;color:#76536a;margin:20px 0}
+.affirmation-small{font-size:12px;color:#a07891}
+.category{display:inline-block;border-radius:20px;padding:7px 12px;background:#f4edf6;color:#806b91;font-size:11px}
+.favorite-btn{border:0;background:transparent;font-size:23px}
+.letter-item{background:white;border:1px solid #f1e5eb;padding:16px;border-radius:16px;margin:10px 0}
+#toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#665466;color:white;padding:12px 18px;border-radius:20px;font-size:12px;display:none;z-index:30;max-width:90%;text-align:center}
+@media(min-width:650px){.grid{grid-template-columns:repeat(4,1fr)}}
+@media print{.tabs{display:none}}
+</style>
 </head>
-<body class="bg-sanctuary-bg text-sanctuary-text pb-28 min-h-screen select-none">
+<body>
 
-    <!-- Header Navigation & Date Selector -->
-    <header class="sticky top-0 bg-sanctuary-bg/90 backdrop-blur-md floral-border border-x-0 border-t-0 z-30 px-5 py-3.5 flex items-center justify-between shadow-xs">
-        <div>
-            <span class="text-[10px] uppercase tracking-widest text-sanctuary-rose font-medium">My Private Sanctuary</span>
-            <h1 class="font-serif text-2xl font-semibold tracking-wide text-sanctuary-sageDark" id="display-date">Loading...</h1>
-        </div>
-        <div class="flex items-center gap-2">
-            <input type="date" id="date-picker" class="hidden" onchange="changeDate(this.value)">
-            <button onclick="document.getElementById('date-picker').showPicker()" class="p-2.5 bg-sanctuary-blush/40 border border-sanctuary-rose/30 rounded-full text-sanctuary-sageDark hover:bg-sanctuary-blush transition shadow-xs flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-            </button>
-            <button onclick="openSettingsModal()" class="p-2.5 bg-sanctuary-cream rounded-full text-sanctuary-sageDark hover:bg-sanctuary-blush/50 transition">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-            </button>
-        </div>
-    </header>
+<header>
+<div class="brand">My Little Journal ♡<small>A LITTLE SPACE WITH GOD</small></div>
+<button class="header-icon" onclick="showPage('journal')">✍🏻</button>
+</header>
 
-    <!-- Main Container -->
-    <main class="max-w-md mx-auto px-4 pt-5 space-y-6">
+<main>
 
-        <!-- TAB 1: DAILY JOURNAL -->
-        <section id="tab-daily" class="tab-content space-y-5">
-            <div class="bg-sanctuary-card floral-border rounded-3xl p-5 shadow-sm space-y-4">
-                <div class="flex items-center justify-between border-b border-sanctuary-cream pb-3">
-                    <h2 class="font-serif text-xl font-semibold text-sanctuary-sageDark">Daily Reflection</h2>
-                    <span class="text-xs px-2.5 py-1 bg-sanctuary-blush/50 text-sanctuary-rose rounded-full font-medium" id="journal-day-badge">Today</span>
-                </div>
-                
-                <div class="bg-sanctuary-cream/50 p-4 rounded-2xl floral-border">
-                    <span class="text-[10px] font-semibold uppercase tracking-widest text-sanctuary-rose">Today's Reflection Prompt</span>
-                    <p class="font-serif text-base italic text-sanctuary-sageDark mt-1" id="daily-prompt-text">Loading prompt...</p>
-                    <button onclick="loadNewPrompt()" class="mt-2 text-xs text-sanctuary-rose underline hover:text-sanctuary-sageDark transition">Get another prompt</button>
-                </div>
+<section class="page active" id="home">
+<p class="subtitle" id="todayLabel"></p>
+<h1>Hello, beautiful soul! 🌷</h1>
+<p class="subtitle">A little space for your thoughts, faith, and all the beautiful things that make you you.</p>
 
-                <div class="space-y-3">
-                    <div>
-                        <label class="block text-xs font-medium text-sanctuary-muted uppercase tracking-wider mb-1">Morning Intentions & Thoughts</label>
-                        <textarea id="daily-morning" rows="3" class="w-full bg-sanctuary-bg border border-sanctuary-cream rounded-2xl p-3.5 text-sm focus:outline-none focus:border-sanctuary-rose transition shadow-2xs" placeholder="How is your spirit this morning? What are your intentions?"></textarea>
-                    </div>
+<div class="card hero">
+<div class="eyebrow">♡ Today's scripture</div>
+<div class="verse" id="homeVerse"></div>
+<div class="reference" id="homeReference"></div>
+<button class="btn" onclick="showPage('devotional')">Read today's devotional →</button>
+</div>
 
-                    <div>
-                        <label class="block text-xs font-medium text-sanctuary-muted uppercase tracking-wider mb-1">Evening Review & Lessons</label>
-                        <textarea id="daily-evening" rows="3" class="w-full bg-sanctuary-bg border border-sanctuary-cream rounded-2xl p-3.5 text-sm focus:outline-none focus:border-sanctuary-rose transition shadow-2xs" placeholder="How did the day unfold? What lessons did you learn?"></textarea>
-                    </div>
+<div class="section-title">A little reminder for you 💗</div>
+<div class="affirmation-card">
+<div class="eyebrow">TODAY'S AFFIRMATION</div>
+<div class="affirmation-text" id="homeAffirmation"></div>
+<div class="affirmation-small" id="homeCategory"></div>
+<button class="btn purple-btn" onclick="showPage('affirmations')">Read more affirmations ♡</button>
+</div>
 
-                    <div>
-                        <label class="block text-xs font-medium text-sanctuary-muted uppercase tracking-wider mb-1">Gratitude & Blessings</label>
-                        <textarea id="daily-gratitude" rows="2" class="w-full bg-sanctuary-bg border border-sanctuary-cream rounded-2xl p-3.5 text-sm focus:outline-none focus:border-sanctuary-rose transition shadow-2xs" placeholder="Three simple things you are grateful for today..."></textarea>
-                    </div>
-                </div>
-            </div>
-        </section>
+<div class="section-title">Your little journey ✨</div>
+<div class="grid">
+<div class="stat pink"><strong id="totalEntries">0</strong><span>Journal entries</span></div>
+<div class="stat green"><strong id="streak">0</strong><span>Day streak</span></div>
+<div class="stat purple"><strong id="monthEntries">0</strong><span>This month</span></div>
+<div class="stat orange"><strong id="gratitudeCount">0</strong><span>Gratitude notes</span></div>
+</div>
 
-        <!-- TAB 2: FAITH & BIBLE -->
-        <section id="tab-faith" class="tab-content hidden space-y-5">
-            <div class="bg-sanctuary-card floral-border rounded-3xl p-5 shadow-sm space-y-4">
-                <div class="flex items-center justify-between border-b border-sanctuary-cream pb-3">
-                    <h2 class="font-serif text-xl font-semibold text-sanctuary-sageDark">Faith & Devotion</h2>
-                    <span class="text-xs px-2.5 py-1 bg-sanctuary-sage/25 text-sanctuary-sageDark rounded-full font-medium">Spiritual Walk</span>
-                </div>
-                
-                <div class="bg-sanctuary-sage/15 p-4 rounded-2xl border border-sanctuary-sage/30">
-                    <span class="text-[10px] font-semibold uppercase tracking-widest text-sanctuary-sageDark">Scripture of the Day</span>
-                    <p class="font-serif text-base italic text-sanctuary-sageDark mt-1" id="bible-verse">"Delight yourself in the Lord, and he will give you the desires of your heart." — Psalm 37:4</p>
-                </div>
+<div class="section-title">A gentle reminder 🌼</div>
+<div class="card green">
+<p class="devotional-text">You don't have to have everything figured out. Take things one day at a time. God is with you in every season.</p>
+<p class="reference">One day at a time, with God. ♡</p>
+</div>
+</section>
 
-                <div>
-                    <label class="block text-xs font-medium text-sanctuary-muted uppercase tracking-wider mb-1">What God is Teaching Me</label>
-                    <textarea id="faith-reflection" rows="3" class="w-full bg-sanctuary-bg border border-sanctuary-cream rounded-2xl p-3.5 text-sm focus:outline-none focus:border-sanctuary-rose transition" placeholder="Reflect on today's verse and spiritual insights..."></textarea>
-                </div>
+<section class="page" id="devotional">
+<div class="eyebrow">YOUR DAILY TIME WITH GOD</div>
+<h1>Daily Devotional 🌿</h1>
+<p class="subtitle" id="devDate"></p>
+<div class="card hero">
+<div class="eyebrow">Today's Bible verse</div>
+<div class="verse" id="devVerse"></div>
+<div class="reference" id="devReference"></div>
+</div>
+<div class="card">
+<div class="eyebrow">01 · Today's reflection</div>
+<h2 id="devTitle"></h2>
+<p class="devotional-text" id="devExplanation"></p>
+</div>
+<div class="card purple">
+<div class="eyebrow">02 · A little prayer</div>
+<h2>Let's pray. 🤍</h2>
+<p class="prayer" id="devPrayer"></p>
+</div>
+<button class="btn full" onclick="showPage('journal')">Write what is in your heart →</button>
+</section>
 
-                <div>
-                    <label class="block text-xs font-medium text-sanctuary-muted uppercase tracking-wider mb-1">Personal Prayers & Requests</label>
-                    <textarea id="faith-prayers" rows="3" class="w-full bg-sanctuary-bg border border-sanctuary-cream rounded-2xl p-3.5 text-sm focus:outline-none focus:border-sanctuary-rose transition" placeholder="Pour out your heart in prayer..."></textarea>
-                </div>
+<section class="page" id="affirmations">
+<div class="eyebrow">A LITTLE LOVE NOTE FOR YOU</div>
+<h1>Daily Affirmations 💗</h1>
+<p class="subtitle">Read these words slowly. You deserve to hear kind things, especially from yourself.</p>
+<div class="affirmation-card">
+<div class="eyebrow">YOUR DAILY AFFIRMATION</div>
+<div class="affirmation-text" id="dailyAffirmation"></div>
+<div class="category" id="dailyCategory"></div>
+<div class="actions" style="justify-content:center;margin-top:20px">
+<button class="btn purple-btn" onclick="nextAffirmation()">Another reminder ↻</button>
+<button class="favorite-btn" id="favoriteCurrent" onclick="favoriteCurrentAffirmation()">♡</button>
+</div>
+<p class="affirmation-small">Take a deep breath. Let these words sink in. ♡</p>
+</div>
 
-                <div>
-                    <label class="block text-xs font-medium text-sanctuary-muted uppercase tracking-wider mb-1">Answered Prayers & Blessings</label>
-                    <textarea id="faith-answered" rows="2" class="w-full bg-sanctuary-bg border border-sanctuary-cream rounded-2xl p-3.5 text-sm focus:outline-none focus:border-sanctuary-rose transition" placeholder="How has God answered your prayers lately?"></textarea>
-                </div>
-            </div>
-        </section>
+<div class="section-title">Choose what your heart needs today</div>
+<div class="actions" id="categoryButtons"></div>
 
-        <!-- TAB 3: SELF-GROWTH -->
-        <section id="tab-growth" class="tab-content hidden space-y-5">
-            <div class="bg-sanctuary-card floral-border rounded-3xl p-5 shadow-sm space-y-4">
-                <div class="border-b border-sanctuary-cream pb-3">
-                    <h2 class="font-serif text-xl font-semibold text-sanctuary-sageDark">Self-Growth & Goals</h2>
-                </div>
-                
-                <div>
-                    <label class="block text-xs font-medium text-sanctuary-muted uppercase tracking-wider mb-1">Yearly Goals & Monthly Focus</label>
-                    <textarea id="growth-goals" rows="3" class="w-full bg-sanctuary-bg border border-sanctuary-cream rounded-2xl p-3.5 text-sm focus:outline-none focus:border-sanctuary-rose transition" placeholder="Your big visions and focus for this month..."></textarea>
-                </div>
+<div class="section-title">My favorite affirmations ⭐</div>
+<div id="favoriteList"></div>
+</section>
 
-                <div>
-                    <label class="block text-xs font-medium text-sanctuary-muted uppercase tracking-wider mb-1">Bucket List & Experiences to Have</label>
-                    <textarea id="growth-bucket" rows="3" class="w-full bg-sanctuary-bg border border-sanctuary-cream rounded-2xl p-3.5 text-sm focus:outline-none focus:border-sanctuary-rose transition" placeholder="Places to visit, skills to learn, memories to create..."></textarea>
-                </div>
+<section class="page" id="journal">
+<div class="eyebrow">YOUR PERSONAL SPACE</div>
+<h1 id="journalHeading">Dear Diary, ♡</h1>
+<p class="subtitle">A safe little space to write, reflect, and be grateful.</p>
+<div class="card">
+<label for="entryDate">Date</label>
+<input type="date" id="entryDate">
+<label for="entryTitle">Title of your day</label>
+<input id="entryTitle" placeholder="A little memory today...">
+<label>How are you feeling?</label>
+<div class="mood-options">
+<button class="mood" data-mood="😊" onclick="chooseMood('😊')">😊</button>
+<button class="mood" data-mood="🥰" onclick="chooseMood('🥰')">🥰</button>
+<button class="mood" data-mood="😌" onclick="chooseMood('😌')">😌</button>
+<button class="mood" data-mood="🥺" onclick="chooseMood('🥺')">🥺</button>
+<button class="mood" data-mood="😔" onclick="chooseMood('😔')">😔</button>
+<button class="mood" data-mood="😤" onclick="chooseMood('😤')">😤</button>
+</div>
+<label for="entryThoughts">What happened today?</label>
+<textarea id="entryThoughts" placeholder="Dear diary, today..."></textarea>
+<label for="entryLesson">What is God teaching me?</label>
+<textarea id="entryLesson" placeholder="Today, I realized that..."></textarea>
+<label for="entryGratitude">Three things I am grateful for</label>
+<textarea id="entryGratitude" placeholder="1. ...&#10;2. ...&#10;3. ..."></textarea>
+<label for="entryPrayer">My personal prayer</label>
+<textarea id="entryPrayer" placeholder="Dear Lord..."></textarea>
+<button class="btn dark full" onclick="saveEntry()">♡ Save my journal entry</button>
+<button class="btn purple-btn full" style="margin-top:8px" onclick="downloadPDF('today')">🌷 Download This Entry as PDF</button>
+<button class="btn full" style="margin-top:8px" onclick="clearForm()">Clear form</button>
+<p class="subtitle" id="saveHint" style="margin-top:12px">Your entries are saved on this browser.</p>
+</div>
+</section>
 
-                <div>
-                    <label class="block text-xs font-medium text-sanctuary-muted uppercase tracking-wider mb-1">Letter to My Future Self</label>
-                    <textarea id="growth-letter" rows="3" class="w-full bg-sanctuary-bg border border-sanctuary-cream rounded-2xl p-3.5 text-sm focus:outline-none focus:border-sanctuary-rose transition" placeholder="Write a note to who you will become in the future..."></textarea>
-                </div>
-            </div>
-        </section>
+<section class="page" id="letters">
+<div class="eyebrow">BE KIND TO YOURSELF</div>
+<h1>Letters to Myself 💌</h1>
+<p class="subtitle">Write the words you need to hear. Your future self might need them one day.</p>
+<div class="card">
+<label for="letterTitle">Letter title</label>
+<input id="letterTitle" placeholder="Dear future me...">
+<label for="letterDate">Date</label>
+<input type="date" id="letterDate">
+<label for="letterText">Your letter</label>
+<textarea id="letterText" style="min-height:200px" placeholder="Dear me,&#10;&#10;I want you to remember..."></textarea>
+<button class="btn dark full" onclick="saveLetter()">♡ Save my letter</button>
+<button class="btn full" style="margin-top:8px" onclick="clearLetter()">Clear letter</button>
+</div>
+<div class="section-title">My saved letters ♡</div>
+<div id="letterList"></div>
+</section>
 
-        <!-- TAB 4: HABITS -->
-        <section id="tab-habits" class="tab-content hidden space-y-5">
-            <div class="bg-sanctuary-card floral-border rounded-3xl p-5 shadow-sm space-y-4">
-                <div class="flex items-center justify-between border-b border-sanctuary-cream pb-3">
-                    <h2 class="font-serif text-xl font-semibold text-sanctuary-sageDark">Daily Habits</h2>
-                    <span class="text-xs px-2.5 py-1 bg-sanctuary-blush/50 text-sanctuary-rose rounded-full font-medium" id="habit-progress-label">0/8 Completed</span>
-                </div>
-                
-                <div class="flex gap-2 mb-2">
-                    <input type="text" id="new-habit-input" placeholder="Add custom daily habit..." class="flex-1 bg-sanctuary-bg border border-sanctuary-cream rounded-2xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-sanctuary-rose">
-                    <button onclick="addHabit()" class="bg-sanctuary-sage text-white px-4 py-2.5 rounded-2xl text-sm font-medium hover:bg-sanctuary-sageDark transition shadow-xs">+</button>
-                </div>
+<section class="page" id="history">
+<div class="eyebrow">LOOK HOW FAR YOU'VE COME</div>
+<h1>My Memories 📖</h1>
+<p class="subtitle">Every little moment deserves to be remembered.</p>
+<div class="card">
+<div class="row between">
+<button class="btn small" onclick="changeMonth(-1)">← Previous</button>
+<strong id="calendarMonth"></strong>
+<button class="btn small" onclick="changeMonth(1)">Next →</button>
+</div>
+<div class="calendar" id="calendar" style="margin-top:15px"></div>
+<p class="subtitle" style="margin:12px 0 0">🌿 Green dates have saved entries. Tap a date to open it.</p>
+</div>
+<div class="section-title">Your saved entries</div>
+<input id="searchEntries" placeholder="🔍 Search your memories..." oninput="renderHistory()">
+<div id="entriesList"></div>
+<div class="card orange">
+<h3>Keep your memories safe ♡</h3>
+<p class="subtitle">Download a backup regularly. Your journal is stored in this browser, not in an online account.</p>
+<div class="actions">
+<button class="btn orange-btn" onclick="backupData()">↓ Download backup</button>
+<button class="btn" onclick="document.getElementById('restoreFile').click()">↑ Restore backup</button>
+<input type="file" id="restoreFile" accept=".json,application/json" hidden onchange="restoreData(event)">
+</div>
+<div class="divider"></div>
+<button class="btn dark full" onclick="downloadPDF('all')">📖 Download All Journal Entries as PDF</button>
+</div>
+</section>
 
-                <div id="habits-list" class="space-y-2.5">
-                    <!-- Habits populated by JS -->
-                </div>
-            </div>
-        </section>
+<section class="page" id="settings">
+<div class="eyebrow">A LITTLE NOTE</div>
+<h1>About this journal 🌸</h1>
+<div class="card">
+<h2>My Little Journal ♡</h2>
+<p class="devotional-text">A little corner of the internet where you can reflect, write your prayers, remember your blessings, and grow closer to God.</p>
+<div class="divider"></div>
+<p class="subtitle">Your journal entries, favorite affirmations, and letters are saved locally in your browser using this device's storage.</p>
+<p class="subtitle">They do not automatically sync to another device. Download a backup of your journal regularly.</p>
+</div>
+<div class="card pink">
+<h3>Made with love and faith ♡</h3>
+<p class="subtitle">You are worthy of love, kindness, and all the beautiful things life has to offer.</p>
+</div>
+</section>
 
-        <!-- TAB 5: MEMORIES -->
-        <section id="tab-memories" class="tab-content hidden space-y-5">
-            <div class="bg-sanctuary-card floral-border rounded-3xl p-5 shadow-sm space-y-4">
-                <div class="border-b border-sanctuary-cream pb-3">
-                    <h2 class="font-serif text-xl font-semibold text-sanctuary-sageDark">Cherished Memories</h2>
-                </div>
-                
-                <div>
-                    <label class="block text-xs font-medium text-sanctuary-muted uppercase tracking-wider mb-1">Memory Title</label>
-                    <input type="text" id="memory-title" placeholder="e.g., A peaceful afternoon walk..." class="w-full bg-sanctuary-bg border border-sanctuary-cream rounded-2xl px-3.5 py-2.5 text-sm mb-3 focus:outline-none focus:border-sanctuary-rose">
-                    
-                    <label class="block text-xs font-medium text-sanctuary-muted uppercase tracking-wider mb-1">Story & Details</label>
-                    <textarea id="memory-story" rows="4" class="w-full bg-sanctuary-bg border border-sanctuary-cream rounded-2xl p-3.5 text-sm focus:outline-none focus:border-sanctuary-rose transition" placeholder="Capture the feelings, smells, laughter, and beauty of this moment..."></textarea>
-                </div>
-            </div>
-        </section>
+</main>
 
-    </main>
+<nav class="tabs">
+<button class="tab active" data-page="home" onclick="showPage('home')"><span>🏡</span>Home</button>
+<button class="tab" data-page="devotional" onclick="showPage('devotional')"><span>📖</span>Faith</button>
+<button class="tab" data-page="affirmations" onclick="showPage('affirmations')"><span>💗</span>Affirm</button>
+<button class="tab" data-page="journal" onclick="showPage('journal')"><span>✍🏻</span>Journal</button>
+<button class="tab" data-page="letters" onclick="showPage('letters')"><span>💌</span>Letters</button>
+<button class="tab" data-page="history" onclick="showPage('history')"><span>🌷</span>Memories</button>
+<button class="tab" data-page="settings" onclick="showPage('settings')"><span>⚙️</span>More</button>
+</nav>
+<div id="toast"></div>
 
-    <!-- Bottom Navigation Bar for iPhone Safari -->
-    <nav class="fixed bottom-0 left-0 right-0 bg-sanctuary-card/95 backdrop-blur-md floral-border border-x-0 border-b-0 z-30 px-3 py-2 shadow-lg">
-        <div class="max-w-md mx-auto flex justify-around items-center">
-            <button onclick="switchTab('daily')" class="tab-btn flex flex-col items-center p-2 text-sanctuary-sageDark active-tab" id="btn-daily">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
-                <span class="text-[10px] mt-1 font-medium">Daily</span>
-            </button>
-            
-            <button onclick="switchTab('faith')" class="tab-btn flex flex-col items-center p-2 text-sanctuary-muted" id="btn-faith">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
-                <span class="text-[10px] mt-1 font-medium">Faith</span>
-            </button>
+<script>
+const STORE="myLittleJournalEntries_v1";
+const FAVSTORE="myLittleJournalFavorites_v1";
+const LETTERSTORE="myLittleJournalLetters_v1";
 
-            <button onclick="switchTab('growth')" class="tab-btn flex flex-col items-center p-2 text-sanctuary-muted" id="btn-growth">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
-                <span class="text-[10px] mt-1 font-medium">Growth</span>
-            </button>
+const today=()=>new Date().toISOString().slice(0,10);
+let entries=readStore(STORE,{});
+let favorites=readStore(FAVSTORE,[]);
+let letters=readStore(LETTERSTORE,[]);
+let selectedMood="";
+let calendarDate=new Date();
+let currentAffirmationIndex=0;
+let activeCategory="All";
 
-            <button onclick="switchTab('habits')" class="tab-btn flex flex-col items-center p-2 text-sanctuary-muted" id="btn-habits">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                <span class="text-[10px] mt-1 font-medium">Habits</span>
-            </button>
+function readStore(key,fallback){
+try{return JSON.parse(localStorage.getItem(key))??fallback}catch(e){return fallback}
+}
+function persist(key,value){localStorage.setItem(key,JSON.stringify(value))}
+function toast(message){
+const el=document.getElementById("toast");
+el.textContent=message;el.style.display="block";
+clearTimeout(window.toastTimer);
+window.toastTimer=setTimeout(()=>el.style.display="none",2600);
+}
 
-            <button onclick="switchTab('memories')" class="tab-btn flex flex-col items-center p-2 text-sanctuary-muted" id="btn-memories">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                <span class="text-[10px] mt-1 font-medium">Memories</span>
-            </button>
-        </div>
-    </nav>
+const readings=[
+["Trust in the LORD with all your heart and lean not on your own understanding.","Proverbs 3:5","Trust His timing","Sometimes we want answers immediately. This verse reminds us that we do not have to understand everything to trust God. He sees the bigger picture, even when we only see today. Let Him guide your decisions and teach you to be patient with His timing.","Heavenly Father, teach me to trust You even when I cannot see what lies ahead. Calm my worries and guide my steps. Amen."],
+["I can do all things through Christ who strengthens me.","Philippians 4:13","You are stronger with God","There will be days when you feel tired or uncertain. Your strength does not have to come from yourself alone. God is with you through every challenge. You are never walking alone.","Lord, when I feel weak, remind me that Your strength is enough. Give me courage to face my challenges and faith to keep going. Amen."],
+["Be still, and know that I am God.","Psalm 46:10","Give yourself permission to rest","Life can become noisy with responsibilities and worries. Sometimes the best thing you can do is pause. You do not always need to fix everything today. Be still and remember that God is in control.","Dear God, quiet my heart. Help me release my worries and find peace in Your presence. Amen."],
+["The LORD is my shepherd; I shall not want.","Psalm 23:1","God provides","A shepherd watches over the sheep. In the same way, God lovingly guides and provides for you. Even when the future feels uncertain, trust that He knows what you need.","Father, thank You for being my Shepherd. Help me recognize Your guidance and be grateful for the blessings You provide. Amen."],
+["Cast all your anxiety on him because he cares for you.","1 Peter 5:7","You do not have to carry it alone","You may be carrying worries that no one else sees. God invites you to bring every concern to Him. Your fears are not too small, and your problems are not too big for His care.","Lord, I give You the worries I have been carrying. Replace my anxious thoughts with peace. Amen."],
+["The LORD is close to the brokenhearted.","Psalm 34:18","God sees your tears","Some days are heavier than others. God does not turn away from your pain. He draws near to those who are hurting and offers comfort when words are not enough.","Dear Lord, stay close to me when my heart feels heavy. Help me heal and find hope again. Amen."],
+["For I know the plans I have for you, declares the LORD.","Jeremiah 29:11","There is hope ahead","You may not know what the next chapter will look like. Uncertainty does not mean you are without hope. Continue to pray, prepare, and trust God with your future.","Father, help me trust the plans You have for my life. Give me patience while I wait and courage to take the next step. Amen."],
+["Give thanks to the LORD, for he is good; his love endures forever.","Psalm 107:1","Notice the little blessings","Gratitude does not mean every day is perfect. It means learning to notice the goodness that remains even on difficult days. A kind message, a meal, or another chance to begin can all be reasons to give thanks.","Lord, open my eyes to the blessings around me. Thank You for the big and little things I sometimes forget to appreciate. Amen."],
+["Let all that you do be done in love.","1 Corinthians 16:14","Choose love today","Love can be shown in simple ways: listening patiently, speaking kindly, forgiving, and helping without expecting anything in return.","God, let my words and actions be guided by love. Help me become more patient and understanding. Amen."],
+["The joy of the LORD is your strength.","Nehemiah 8:10","Find joy in His presence","Joy is not the same as having a problem-free life. It is the quiet confidence that God remains good even when circumstances are difficult.","Heavenly Father, restore my joy. Help me see Your goodness even in ordinary moments. Amen."],
+["Commit to the LORD whatever you do, and he will establish your plans.","Proverbs 16:3","Invite God into your plans","Your dreams, work, studies, and relationships matter. Invite God into your decisions. Pray for wisdom and do your part faithfully.","Lord, I surrender my plans to You. Give me wisdom to make good decisions. Amen."],
+["God is our refuge and strength, an ever-present help in trouble.","Psalm 46:1","A safe place in every season","When life feels overwhelming, remember that you have a place to turn. God is your refuge. You can come to Him with your questions, fears, and exhaustion.","Father, be my refuge today. When I feel overwhelmed, remind me to turn to You first. Amen."],
+["Let us not become weary in doing good.","Galatians 6:9","Keep doing good","Good things often take time. Do not let delayed results convince you that your efforts are meaningless. Keep showing up and doing what is right.","Lord, renew my strength when I feel discouraged. Help me stay faithful in the little things. Amen."],
+["The LORD will fight for you; you need only to be still.","Exodus 14:14","You can surrender the battle","Not every situation needs to be solved through worry. Be faithful with your part and trust God with what is beyond your control.","Lord, help me know when to act and when to surrender. Give me peace. Amen."],
+["A cheerful heart is good medicine.","Proverbs 17:22","Make room for happiness","Laughter, rest, friendship, and simple pleasures are gifts too. You are allowed to enjoy life while still growing and working toward your goals.","Dear God, thank You for the people and moments that bring joy into my life. Amen."],
+["The LORD is good to all; he has compassion on all he has made.","Psalm 145:9","Remember His kindness","God's goodness is not limited to the days when everything goes according to plan. His compassion meets you in your ordinary routines and difficult seasons.","Father, thank You for Your constant goodness. Help me receive Your love and show compassion to others. Amen."],
+["Be strong and courageous. Do not be afraid.","Joshua 1:9","Take the next brave step","Courage does not mean you never feel afraid. It means you keep moving while trusting that God is with you.","Lord, give me courage for what I need to face today. Remind me that Your presence goes with me. Amen."],
+["Above all, love each other deeply.","1 Peter 4:8","Love with intention","Relationships grow through patience, forgiveness, and consistent care. Remember to extend that same gentleness to yourself.","God, teach me to love sincerely. Help me be patient, forgiving, and thoughtful. Amen."],
+["My grace is sufficient for you, for my power is made perfect in weakness.","2 Corinthians 12:9","Grace for today","You do not need to be perfect to be loved by God. When you fall short, return to Him. Let His grace encourage you to begin again.","Lord, thank You for giving me grace. Help me accept my imperfections and keep growing. Amen."],
+["This is the day that the LORD has made; let us rejoice and be glad in it.","Psalm 118:24","Receive today's gift","Today may look ordinary, but it is still a gift. Look for something good in the day you already have. Be present and appreciate this moment.","Thank You, Lord, for another day. Help me use it wisely, love generously, and notice my blessings. Amen."]
+];
 
-    <!-- Settings / Backup Modal -->
-    <div id="settings-modal" class="fixed inset-0 bg-black/30 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-sanctuary-card floral-border rounded-3xl p-6 w-full max-w-sm space-y-4 shadow-xl">
-            <div class="flex justify-between items-center border-b border-sanctuary-cream pb-3">
-                <h3 class="font-serif text-xl font-semibold text-sanctuary-sageDark">Journal Settings</h3>
-                <button onclick="closeSettingsModal()" class="text-sanctuary-muted hover:text-sanctuary-rose">✕</button>
-            </div>
-            <p class="text-xs text-sanctuary-muted">Export your journal data for safe backup or import it to another device.</p>
-            <div class="space-y-2">
-                <button onclick="exportData()" class="w-full bg-sanctuary-sage text-white py-2.5 rounded-2xl text-sm font-medium hover:bg-sanctuary-sageDark transition">Export Backup (JSON)</button>
-                <label class="w-full block text-center bg-sanctuary-cream text-sanctuary-sageDark py-2.5 rounded-2xl text-sm font-medium hover:bg-sanctuary-blush transition cursor-pointer">
-                    Import Backup <input type="file" onchange="importData(event)" class="hidden" accept=".json">
-                </label>
-            </div>
-        </div>
-    </div>
+const affirmations=[
+{c:"Self-love",t:"I am worthy of love, even on the days when I struggle to love myself."},
+{c:"Self-love",t:"I deserve the same kindness I so freely give to others."},
+{c:"Self-love",t:"I am enough, exactly as I am, while still becoming who I want to be."},
+{c:"Self-love",t:"I do not need to be perfect to be worthy of beautiful things."},
+{c:"Self-love",t:"I am allowed to take up space, express my feelings, and be myself."},
+{c:"Confidence",t:"I trust my abilities, my decisions, and the person I am becoming."},
+{c:"Confidence",t:"I can do difficult things, even when I feel nervous."},
+{c:"Confidence",t:"My voice matters, and my thoughts deserve to be heard."},
+{c:"Confidence",t:"I am proud of how far I have come, even if I still have a long way to go."},
+{c:"Confidence",t:"I do not have to compare my journey with anyone else's."},
+{c:"Healing",t:"I give myself permission to heal at my own pace."},
+{c:"Healing",t:"I am allowed to outgrow what no longer brings me peace."},
+{c:"Healing",t:"My past does not define the beautiful future I can create."},
+{c:"Healing",t:"I can have difficult days without believing that my whole life is difficult."},
+{c:"Healing",t:"I am learning to be gentle with the parts of me that are still healing."},
+{c:"Faith",t:"God is working in my life, even when I cannot see the whole picture."},
+{c:"Faith",t:"I can surrender what I cannot control and trust God's timing."},
+{c:"Faith",t:"I am never alone; God's love walks with me through every season."},
+{c:"Faith",t:"My prayers matter, and I can bring my whole heart to God."},
+{c:"Faith",t:"I choose faith over fear, one little step at a time."},
+{c:"Career",t:"My hard work has value, even before I see the results."},
+{c:"Career",t:"I am capable of learning, improving, and achieving meaningful goals."},
+{c:"Career",t:"I deserve opportunities that recognize my effort and potential."},
+{c:"Career",t:"I can be proud of my progress without rushing my journey."},
+{c:"Relationships",t:"I deserve love that is sincere, consistent, and respectful."},
+{c:"Relationships",t:"I am worthy of being appreciated, understood, and cared for."},
+{c:"Relationships",t:"I do not need to beg for the love and respect I deserve."},
+{c:"Relationships",t:"I can love others deeply without abandoning myself."},
+{c:"Happiness",t:"I deserve to experience joy without feeling guilty about it."},
+{c:"Happiness",t:"Beautiful things are still possible for me."},
+{c:"Happiness",t:"I am allowed to enjoy the little moments that make life meaningful."},
+{c:"Happiness",t:"There is still so much goodness waiting for me."},
+{c:"Self-love",t:"I am not behind. My life is unfolding in its own time."},
+{c:"Confidence",t:"I am becoming someone my younger self would be proud of."},
+{c:"Healing",t:"I can start again as many times as I need."},
+{c:"Faith",t:"God knows my heart, my struggles, and the dreams I quietly carry."},
+{c:"Career",t:"I am more capable than my doubts sometimes allow me to believe."},
+{c:"Relationships",t:"The right people will value the real me."},
+{c:"Happiness",t:"I welcome peaceful days, genuine laughter, and unexpected blessings."}
+];
 
-    <!-- Application Script -->
-    <script>
-        let currentDate = new Date().toISOString().split('T')[0];
-        
-        const prompts = [
-            "What brought quiet peace to your heart today?",
-            "What is something you need to forgive yourself for this week?",
-            "How did you experience God's grace or love today?",
-            "What is a fear you are ready to surrender and let go of?",
-            "In what area of your life are you growing the most right now?",
-            "What is a boundary you set or wish to set to protect your peace?",
-            "What childhood dream still brings a smile to your face?"
-        ];
+function dailyIndex(){
+const start=new Date(new Date().getFullYear(),0,0);
+return Math.floor((new Date()-start)/86400000)%affirmations.length;
+}
+function showDailyAffirmation(){
+const a=affirmations[dailyIndex()];
+document.getElementById("homeAffirmation").textContent="“"+a.t+"”";
+document.getElementById("homeCategory").textContent=a.c;
+currentAffirmationIndex=dailyIndex();
+renderCurrentAffirmation();
+}
+function renderCurrentAffirmation(){
+const a=affirmations[currentAffirmationIndex];
+document.getElementById("dailyAffirmation").textContent="“"+a.t+"”";
+document.getElementById("dailyCategory").textContent=a.c;
+document.getElementById("favoriteCurrent").textContent=favorites.includes(a.t)?"♥":"♡";
+}
+function nextAffirmation(){
+currentAffirmationIndex=(currentAffirmationIndex+1)%affirmations.length;
+renderCurrentAffirmation();
+}
+function favoriteCurrentAffirmation(){
+const t=affirmations[currentAffirmationIndex].t;
+if(favorites.includes(t))favorites=favorites.filter(x=>x!==t);
+else favorites.push(t);
+persist(FAVSTORE,favorites);
+renderCurrentAffirmation();renderFavorites();
+toast(favorites.includes(t)?"Added to your favorites! ♥":"Removed from favorites.");
+}
+function renderFavorites(){
+const box=document.getElementById("favoriteList");
+box.innerHTML="";
+if(!favorites.length){
+box.innerHTML='<div class="empty-state">♡<br><br>Your favorite affirmations will appear here.</div>';return;
+}
+favorites.forEach(t=>{
+const item=document.createElement("div");item.className="entry-item";
+const p=document.createElement("p");p.className="devotional-text";p.textContent="“"+t+"”";
+const b=document.createElement("button");b.className="btn small orange-btn";b.textContent="Remove";
+b.onclick=()=>{favorites=favorites.filter(x=>x!==t);persist(FAVSTORE,favorites);renderFavorites();renderCurrentAffirmation()};
+item.append(p,b);box.append(item);
+});
+}
+function renderCategories(){
+const box=document.getElementById("categoryButtons");box.innerHTML="";
+["All",...new Set(affirmations.map(a=>a.c))].forEach(c=>{
+const b=document.createElement("button");b.className="btn small";
+b.textContent=c;b.style.background=activeCategory===c?"#e8def5":"#fff";
+b.onclick=()=>{activeCategory=c;renderCategories();renderCategoryList()};
+box.append(b);
+});
+}
+function renderCategoryList(){
+let old=document.getElementById("categoryList");
+if(!old){old=document.createElement("div");old.id="categoryList";document.getElementById("categoryButtons").after(old)}
+old.innerHTML="";
+affirmations.forEach((a,i)=>{
+if(activeCategory!=="All"&&a.c!==activeCategory)return;
+const item=document.createElement("div");item.className="entry-item";
+const cat=document.createElement("div");cat.className="category";cat.textContent=a.c;
+const p=document.createElement("p");p.className="devotional-text";p.textContent="“"+a.t+"”";
+const b=document.createElement("button");b.className="favorite-btn";b.textContent=favorites.includes(a.t)?"♥":"♡";
+b.onclick=()=>{currentAffirmationIndex=i;favoriteCurrentAffirmation()};
+item.append(cat,p,b);old.append(item);
+});
+}
 
-        const defaultHabits = [
-            'Bible Reading & Meditation',
-            'Daily Journaling & Reflection',
-            'Quiet Prayer Time',
-            'Drink 8 Glasses of Water',
-            'Self-Care & Skincare',
-            'Read a Book (15 mins)',
-            'Gentle Exercise or Walk',
-            'Sleep by 10:30 PM'
-        ];
+function showPage(id){
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("active",t.dataset.page===id));
+if(id==="home")renderStats();
+if(id==="history"){renderCalendar();renderHistory()}
+if(id==="affirmations"){renderCategories();renderCategoryList();renderFavorites();renderCurrentAffirmation()}
+if(id==="letters")renderLetters();
+window.scrollTo(0,0);
+}
+function renderDevotional(){
+const r=readings[dailyIndex()%readings.length];
+document.getElementById("homeVerse").textContent="“"+r[0]+"”";
+document.getElementById("homeReference").textContent=r[1];
+document.getElementById("devVerse").textContent="“"+r[0]+"”";
+document.getElementById("devReference").textContent=r[1];
+document.getElementById("devTitle").textContent=r[2];
+document.getElementById("devExplanation").textContent=r[3];
+document.getElementById("devPrayer").textContent=r[4];
+document.getElementById("devDate").textContent=new Date().toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric",year:"numeric"});
+document.getElementById("todayLabel").textContent=new Date().toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric",year:"numeric"});
+}
+function renderStats(){
+const dates=Object.keys(entries);
+document.getElementById("totalEntries").textContent=dates.length;
+document.getElementById("monthEntries").textContent=dates.filter(d=>d.slice(0,7)===today().slice(0,7)).length;
+document.getElementById("gratitudeCount").textContent=dates.filter(d=>(entries[d].gratitude||"").trim()).length;
+let streak=0,cursor=new Date();
+while(true){
+const key=cursor.getFullYear()+"-"+String(cursor.getMonth()+1).padStart(2,"0")+"-"+String(cursor.getDate()).padStart(2,"0");
+if(!entries[key])break;
+streak++;cursor.setDate(cursor.getDate()-1);
+}
+document.getElementById("streak").textContent=streak;
+}
+function chooseMood(m){
+selectedMood=m;
+document.querySelectorAll(".mood").forEach(b=>b.classList.toggle("selected",b.dataset.mood===m));
+}
+function clearForm(){
+["entryTitle","entryThoughts","entryLesson","entryGratitude","entryPrayer"].forEach(id=>document.getElementById(id).value="");
+document.getElementById("entryDate").value=today();
+selectedMood="";
+document.querySelectorAll(".mood").forEach(b=>b.classList.remove("selected"));
+document.getElementById("journalHeading").textContent="Dear Diary, ♡";
+document.getElementById("saveHint").textContent="Your entries are saved on this browser.";
+}
+function loadEntry(date){
+const e=entries[date];
+document.getElementById("entryDate").value=date;
+document.getElementById("entryTitle").value=e?.title||"";
+document.getElementById("entryThoughts").value=e?.thoughts||"";
+document.getElementById("entryLesson").value=e?.lesson||"";
+document.getElementById("entryGratitude").value=e?.gratitude||"";
+document.getElementById("entryPrayer").value=e?.prayer||"";
+chooseMood(e?.mood||"");
+document.getElementById("journalHeading").textContent=e?"Edit your memories ♡":"Dear Diary, ♡";
+document.getElementById("saveHint").textContent=e?"You are editing your saved entry.":"Write something beautiful about today.";
+showPage("journal");
+}
+function saveEntry(){
+const date=document.getElementById("entryDate").value;
+if(!date){toast("Please choose a date first.");return}
+const data={
+title:document.getElementById("entryTitle").value.trim(),
+mood:selectedMood,
+thoughts:document.getElementById("entryThoughts").value.trim(),
+lesson:document.getElementById("entryLesson").value.trim(),
+gratitude:document.getElementById("entryGratitude").value.trim(),
+prayer:document.getElementById("entryPrayer").value.trim()
+};
+if(!Object.values(data).some(v=>v)){toast("Write a little something before saving ♡");return}
+entries[date]=data;persist(STORE,entries);renderStats();
+toast("Your little memory has been saved! ♡");
+document.getElementById("saveHint").textContent="Saved successfully on this device.";
+}
+function renderCalendar(){
+const y=calendarDate.getFullYear(),m=calendarDate.getMonth();
+document.getElementById("calendarMonth").textContent=calendarDate.toLocaleDateString(undefined,{month:"long",year:"numeric"});
+const cal=document.getElementById("calendar");cal.innerHTML="";
+["S","M","T","W","T","F","S"].forEach(d=>{
+const el=document.createElement("div");el.className="day-name";el.textContent=d;cal.append(el);
+});
+const first=new Date(y,m,1).getDay(),total=new Date(y,m+1,0).getDate();
+for(let i=0;i<first;i++){const el=document.createElement("div");el.className="day empty";cal.append(el)}
+for(let d=1;d<=total;d++){
+const key=y+"-"+String(m+1).padStart(2,"0")+"-"+String(d).padStart(2,"0");
+const el=document.createElement("button");el.className="day"+(entries[key]?" has-entry":"")+(key===today()?" today":"");
+el.textContent=d;el.onclick=()=>loadEntry(key);cal.append(el);
+}
+}
+function changeMonth(n){calendarDate.setMonth(calendarDate.getMonth()+n);renderCalendar()}
+function renderHistory(){
+const q=(document.getElementById("searchEntries").value||"").toLowerCase();
+const list=document.getElementById("entriesList");list.innerHTML="";
+const dates=Object.keys(entries).sort().reverse().filter(date=>(date+" "+Object.values(entries[date]).join(" ")).toLowerCase().includes(q));
+if(!dates.length){list.innerHTML='<div class="empty-state">🌷<br><br>No journal entries yet.<br>Your little memories will appear here.</div>';return}
+dates.forEach(date=>{
+const e=entries[date],item=document.createElement("div");item.className="entry-item";
+const title=document.createElement("h3");title.textContent=(e.mood?e.mood+" ":"")+(e.title||"A little memory");
+const dateEl=document.createElement("div");dateEl.className="entry-date";dateEl.textContent=new Date(date+"T12:00:00").toLocaleDateString(undefined,{month:"long",day:"numeric",year:"numeric"});
+const preview=document.createElement("p");preview.className="entry-preview";preview.textContent=(e.thoughts||e.lesson||e.gratitude||"A saved memory").slice(0,150);
+const actions=document.createElement("div");actions.className="actions";
+const edit=document.createElement("button");edit.className="btn small";edit.textContent="Edit entry";edit.onclick=()=>loadEntry(date);
+const del=document.createElement("button");del.className="btn small orange-btn";del.textContent="Delete";del.onclick=()=>deleteEntry(date);
+actions.append(edit,del);item.append(title,dateEl,preview,actions);list.append(item);
+});
+}
+function deleteEntry(date){
+if(!confirm("Delete this journal entry? This cannot be undone."))return;
+delete entries[date];persist(STORE,entries);renderHistory();renderCalendar();renderStats();toast("Entry deleted.");
+}
+function backupData(){
+const data={entries,favorites,letters};
+const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+const url=URL.createObjectURL(blob);
+const a=document.createElement("a");a.href=url;a.download="my-little-journal-backup-"+today()+".json";a.click();
+URL.revokeObjectURL(url);toast("Your backup is ready!");
+}
+function restoreData(event){
+const file=event.target.files[0];if(!file)return;
+const reader=new FileReader();
+reader.onload=()=>{
+try{
+const data=JSON.parse(reader.result);
+if(!data||typeof data!=="object")throw new Error("Invalid");
+if(!confirm("Restore this backup? Matching dates and saved items may be replaced."))return;
+if(data.entries&&typeof data.entries==="object")entries={...entries,...data.entries};
+else entries={...entries,...data};
+if(Array.isArray(data.favorites))favorites=[...new Set([...favorites,...data.favorites])];
+if(Array.isArray(data.letters))letters=[...letters,...data.letters];
+persist(STORE,entries);persist(FAVSTORE,favorites);persist(LETTERSTORE,letters);
+renderHistory();renderCalendar();renderStats();renderFavorites();renderLetters();
+toast("Your memories have been restored! ♡");
+}catch(e){toast("Sorry, that backup file is not valid.")}
+event.target.value="";
+};
+reader.readAsText(file);
+}
 
-        window.onload = function() {
-            document.getElementById('date-picker').value = currentDate;
-            updateDateDisplay();
-            loadJournalData();
-            setupAutoSave();
-            loadNewPrompt();
-        };
+/* LETTERS TO MYSELF */
+function clearLetter(){
+document.getElementById("letterTitle").value="";
+document.getElementById("letterDate").value=today();
+document.getElementById("letterText").value="";
+}
+function saveLetter(){
+const title=document.getElementById("letterTitle").value.trim();
+const date=document.getElementById("letterDate").value;
+const text=document.getElementById("letterText").value.trim();
+if(!text){toast("Write a little love note first. ♡");return}
+letters.unshift({id:Date.now(),title:title||"A letter to myself",date,text});
+persist(LETTERSTORE,letters);renderLetters();clearLetter();toast("Your letter has been saved! 💌");
+}
+function renderLetters(){
+const box=document.getElementById("letterList");box.innerHTML="";
+if(!letters.length){box.innerHTML='<div class="empty-state">💌<br><br>Your letters to yourself will live here.</div>';return}
+letters.forEach(letter=>{
+const item=document.createElement("div");item.className="letter-item";
+const h=document.createElement("h3");h.textContent=letter.title;
+const d=document.createElement("div");d.className="entry-date";d.textContent=letter.date;
+const p=document.createElement("p");p.className="devotional-text";p.textContent=letter.text;
+const actions=document.createElement("div");actions.className="actions";
+const edit=document.createElement("button");edit.className="btn small";edit.textContent="Edit";
+edit.onclick=()=>{
+document.getElementById("letterTitle").value=letter.title;
+document.getElementById("letterDate").value=letter.date;
+document.getElementById("letterText").value=letter.text;
+letters=letters.filter(x=>x.id!==letter.id);persist(LETTERSTORE,letters);renderLetters();window.scrollTo(0,0);
+};
+const del=document.createElement("button");del.className="btn small orange-btn";del.textContent="Delete";
+del.onclick=()=>{
+if(confirm("Delete this letter?")){letters=letters.filter(x=>x.id!==letter.id);persist(LETTERSTORE,letters);renderLetters();toast("Letter deleted.")}
+};
+actions.append(edit,del);item.append(h,d,p,actions);box.append(item);
+});
+}
 
-        function updateDateDisplay() {
-            const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
-            const formattedDate = new Date(currentDate).toLocaleDateString('en-US', options);
-            document.getElementById('display-date').innerText = formattedDate;
-        }
+/* PDF EXPORT */
+function downloadPDF(mode){
+let selected=[];
+if(mode==="today"){
+const date=document.getElementById("entryDate").value;
+if(!entries[date]){toast("Please save an entry for this date first. ♡");return}
+selected=[[date,entries[date]]];
+}else{
+selected=Object.entries(entries).sort((a,b)=>a[0].localeCompare(b[0]));
+if(!selected.length){toast("You don't have any saved entries yet. ♡");return}
+}
+const esc=value=>String(value||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const sections=selected.map(([date,e])=>`
+<article class="entry">
+<p class="date">${esc(new Date(date+"T12:00:00").toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"}))}</p>
+<h2>${esc(e.title||"A Little Memory")}</h2>
+<p class="mood">${esc(e.mood)}</p>
+<h3>What happened today?</h3><p>${esc(e.thoughts).replace(/\n/g,"<br>")||"—"}</p>
+<h3>What is God teaching me?</h3><p>${esc(e.lesson).replace(/\n/g,"<br>")||"—"}</p>
+<h3>Three things I am grateful for</h3><p>${esc(e.gratitude).replace(/\n/g,"<br>")||"—"}</p>
+<h3>My personal prayer</h3><p>${esc(e.prayer).replace(/\n/g,"<br>")||"—"}</p>
+</article>`).join("");
+const w=window.open("","_blank");
+if(!w){toast("Please allow pop-ups in Safari to create your PDF.");return}
+w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>My Little Journal</title>
+<style>
+body{font-family:Georgia,serif;color:#554653;padding:30px;line-height:1.7}
+header{text-align:center;border-bottom:2px solid #f2dce7;padding:20px;margin-bottom:30px}
+h1{color:#ae7892;font-size:28px}.subtitle{color:#9b8995;font:12px Arial}
+.entry{page-break-after:always;padding:15px 5px}.entry:last-child{page-break-after:auto}
+.date{color:#a87891;font:12px Arial}h2{color:#986984}
+h3{color:#698b70;font:bold 14px Arial;margin-top:25px}
+footer{text-align:center;color:#ad91a1;font:11px Arial;margin-top:30px}
+@media print{body{padding:15px}}
+</style></head><body>
+<header><h1>My Little Journal ♡</h1><p class="subtitle">A LITTLE SPACE WITH GOD</p><p class="subtitle">${mode==="today"?"My Daily Entry":"My Journal Memories"}</p></header>
+${sections}<footer>Made with love, gratitude, and faith. ♡</footer>
+<script>window.onload=function(){setTimeout(function(){window.print()},500)};<\/script>
+</body></html>`);
+w.document.close();
+}
 
-        function changeDate(newDate) {
-            currentDate = newDate;
-            updateDateDisplay();
-            loadJournalData();
-        }
-
-        function loadNewPrompt() {
-            const randomPrompt = prompts[Math.floor(Math.random() * prompts.length)];
-            document.getElementById('daily-prompt-text').innerText = `"${randomPrompt}"`;
-        }
-
-        function switchTab(tabName) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.tab-btn').forEach(el => {
-                el.classList.remove('text-sanctuary-sageDark');
-                el.classList.add('text-sanctuary-muted');
-            });
-
-            document.getElementById('tab-' + tabName).classList.remove('hidden');
-            const activeBtn = document.getElementById('btn-' + tabName);
-            activeBtn.classList.remove('text-sanctuary-muted');
-            activeBtn.classList.add('text-sanctuary-sageDark');
-        }
-
-        function getStorageKey(field) {
-            return `sanctuary_${currentDate}_${field}`;
-        }
-
-        function loadJournalData() {
-            const fields = ['daily-morning', 'daily-evening', 'daily-gratitude', 'faith-reflection', 'faith-prayers', 'faith-answered', 'growth-goals', 'growth-bucket', 'growth-letter', 'memory-title', 'memory-story'];
-            
-            fields.forEach(field => {
-                const value = localStorage.getItem(getStorageKey(field)) || '';
-                document.getElementById(field).value = value;
-            });
-
-            renderHabits();
-        }
-
-        function setupAutoSave() {
-            const fields = ['daily-morning', 'daily-evening', 'daily-gratitude', 'faith-reflection', 'faith-prayers', 'faith-answered', 'growth-goals', 'growth-bucket', 'growth-letter', 'memory-title', 'memory-story'];
-            
-            fields.forEach(field => {
-                document.getElementById(field).addEventListener('input', function(e) {
-                    localStorage.setItem(getStorageKey(field), e.target.value);
-                });
-            });
-        }
-
-        function renderHabits() {
-            const savedHabits = JSON.parse(localStorage.getItem('sanctuary_custom_habits')) || defaultHabits;
-            const habitStates = JSON.parse(localStorage.getItem(getStorageKey('habits_state'))) || {};
-            const container = document.getElementById('habits-list');
-            
-            container.innerHTML = '';
-            let completedCount = 0;
-            
-            savedHabits.forEach((habit, index) => {
-                const isChecked = habitStates[index] || false;
-                if (isChecked) completedCount++;
-                
-                const div = document.createElement('div');
-                div.className = 'flex items-center justify-between bg-sanctuary-bg border border-sanctuary-cream p-3 rounded-2xl shadow-2xs';
-                div.innerHTML = `
-                    <span class="text-sm text-sanctuary-text ${isChecked ? 'line-through opacity-50' : ''}">${habit}</span>
-                    <input type="checkbox" ${isChecked ? 'checked' : ''} onchange="toggleHabit(${index})" class="w-5 h-5 accent-sanctuary-sage rounded-md cursor-pointer">
-                `;
-                container.appendChild(div);
-            });
-
-            document.getElementById('habit-progress-label').innerText = `${completedCount}/${savedHabits.length} Completed`;
-        }
-
-        function toggleHabit(index) {
-            const habitStates = JSON.parse(localStorage.getItem(getStorageKey('habits_state'))) || {};
-            habitStates[index] = !habitStates[index];
-            localStorage.setItem(getStorageKey('habits_state'), JSON.stringify(habitStates));
-            renderHabits();
-        }
-
-        function addHabit() {
-            const input = document.getElementById('new-habit-input');
-            const val = input.value.trim();
-            if (val) {
-                const savedHabits = JSON.parse(localStorage.getItem('sanctuary_custom_habits')) || defaultHabits;
-                savedHabits.push(val);
-                localStorage.setItem('sanctuary_custom_habits', JSON.stringify(savedHabits));
-                input.value = '';
-                renderHabits();
-            }
-        }
-
-        function openSettingsModal() { document.getElementById('settings-modal').classList.remove('hidden'); }
-        function closeSettingsModal() { document.getElementById('settings-modal').classList.add('hidden'); }
-
-        function exportData() {
-            const allData = {};
-            for (let i = 0; i < localStorage.length; i++) {
-                const key = localStorage.key(i);
-                allData[key] = localStorage.getItem(key);
-            }
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(allData));
-            const downloadAnchor = document.createElement('a');
-            downloadAnchor.setAttribute("href", dataStr);
-            downloadAnchor.setAttribute("download", `my_sanctuary_backup_${new Date().toISOString().split('T')[0]}.json`);
-            document.body.appendChild(downloadAnchor);
-            downloadAnchor.click();
-            downloadAnchor.remove();
-        }
-
-        function importData(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const importedData = JSON.parse(e.target.result);
-                    for (const key in importedData) {
-                        localStorage.setItem(key, importedData[key]);
-                    }
-                    alert('Backup successfully restored!');
-                    loadJournalData();
-                    closeSettingsModal();
-                } catch (err) {
-                    alert('Invalid backup file.');
-                }
-            };
-            reader.readAsText(file);
-        }
-    </script>
+document.getElementById("entryDate").value=today();
+document.getElementById("letterDate").value=today();
+document.getElementById("entryDate").addEventListener("change",e=>{
+const date=e.target.value;
+if(entries[date])loadEntry(date);
+else{clearForm();document.getElementById("entryDate").value=date}
+});
+renderDevotional();
+renderStats();
+renderCalendar();
+renderHistory();
+showDailyAffirmation();
+renderCategories();
+renderCategoryList();
+renderFavorites();
+renderLetters();
+renderCurrentAffirmation();
+</script>
 </body>
 </html>
